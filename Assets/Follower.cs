@@ -20,10 +20,12 @@ public class Follower : Entity
         Vector3 movement = target.transform.position - transform.position;
         if (movement.magnitude > followDistance)
         {
+            Say("Follow " + target.gameObject.name);
             movement.Normalize();
             rb2D.velocity = movement * speed;
         } else
         {
+            Say("Idle");
             rb2D.velocity = movement * 0;
         }
 

@@ -45,7 +45,7 @@ public class Sheep : MonoBehaviour
 
 
 
-        Debug.Log("VVV looking for --> " + spriteName);
+        //Debug.Log("VVV looking for --> " + spriteName);
 
         this.spriteRenderer.sprite = this.spriteSheet[spriteName];
     }
@@ -58,7 +58,7 @@ public class Sheep : MonoBehaviour
         var sprites = Resources.LoadAll<Sprite>(this.SpriteSheetName);
         foreach (var sprite in sprites)
         {
-            Debug.Log("VVV->" +  sprite.name);
+            //Debug.Log("VVV->" +  sprite.name);
         }
         this.spriteSheet = sprites.ToDictionary(x => x.name, x => x);
 

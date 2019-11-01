@@ -24,6 +24,8 @@ public class DM : MonoBehaviour
         {
             _instance = this;
         }
+
+        _instance.actors = new Dictionary<string, Entity>();
     }
 
 
@@ -32,13 +34,26 @@ public class DM : MonoBehaviour
     void Start()
     {
         StartCoroutine(ClearText(1f));
+       
+
+
+
+
+    }
+
+    private Dictionary<string, Entity> actors;
+    public static void RegisterPlayer(string name, Entity self)
+    {
+        Debug.Log("Registering " + name);
+        _instance.actors.Add(name, self);
+
     }
 
 
     IEnumerator ClearText(float time)
     {
         while (true) {
-            if (_instance.msgTime < System.DateTime.Now)
+            if (Instance.msgTime < System.DateTime.Now)
             {
                 SendMessage("...");
             } 
@@ -50,13 +65,37 @@ public class DM : MonoBehaviour
 
     public static void SendMessage(string txt)
     {
-        _instance.msgTime = System.DateTime.Now.AddSeconds(2);
-        _instance.textScreen.text = txt;
+        Instance.msgTime = System.DateTime.Now.AddSeconds(2);
+        Instance.textScreen.text = txt;
     }
 
     // Update is called once per frame
+
+    bool sceneInitiated = false;
+    Scene scene;
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+            if (!sceneInitiated)
+            {
+                scene = new Scene();
+                //bug.Log("Scene created");
+
+                scene._actors.Add(actors["player"]);
+                scene._actors.Add(actors["cals1"]);
+                //bug.Log("Scene actors added");
+
+                scene.Start();
+               //ebug.Log("Scene started");
+                sceneInitiated = true;
+            }
+            
+
+            scene.Update();
+        }
 
         //textScreen.text = i.ToString();
         i++;
@@ -64,7 +103,10 @@ public class DM : MonoBehaviour
 
 
 
-
+    public static Entity FindActor(string name)
+    {
+        return Instance.actors[name];
+    }
 
 
 

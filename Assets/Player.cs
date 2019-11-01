@@ -10,6 +10,11 @@ public class Player : Entity
     new void Start()
     {
         base.Start();
+        if (DM.Instance != null)
+        {
+            DM.RegisterPlayer(entityName, this);
+        }
+           
     }
 
     // Update is called once per frame

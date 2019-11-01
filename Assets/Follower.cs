@@ -8,10 +8,19 @@ public class Follower : Entity
     public float speed = 2;
     public float followDistance = 2.0f;
 
+    
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
+
+        if (DM.Instance != null)
+        {
+            DM.RegisterPlayer(entityName, this);
+        }
+
+        
     }
 
     // Update is called once per frame
@@ -20,12 +29,12 @@ public class Follower : Entity
         Vector3 movement = target.transform.position - transform.position;
         if (movement.magnitude > followDistance)
         {
-            Say("Follow " + target.gameObject.name);
+            //Say("Follow " + target.gameObject.name);
             movement.Normalize();
             rb2D.velocity = movement * speed;
         } else
         {
-            Say("Idle");
+            //Say("Idle");
             rb2D.velocity = movement * 0;
         }
 

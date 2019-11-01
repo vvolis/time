@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
     protected Animator animator;
     protected Rigidbody2D rb2D;
     protected SpeechBubble speechBubble;
-
+    public string entityName = "tmpName";
 
     //All Entities have
     //--speech bubble

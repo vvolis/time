@@ -11,7 +11,6 @@ public static class Helper
             Transform t = parent.transform;
             foreach (Transform tr in t)
             {
-                Debug.Log("Checking " + tr.tag);
                 if (tr.tag == tag)
                 {
                     

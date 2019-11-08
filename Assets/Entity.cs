@@ -34,19 +34,27 @@ public class Entity : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    private Vector3 lastPos;
     public void Update()
     {
-        if (rb2D.velocity.magnitude > 0)
+        Vector3 speed = this.transform.position - lastPos;
+
+        if (speed.magnitude > 0)
         {
-            animator.SetFloat("moveX", rb2D.velocity.x);
-            animator.SetFloat("moveY", rb2D.velocity.y);
+            animator.SetFloat("moveX", speed.x);
+            animator.SetFloat("moveY", speed.y);
             animator.SetBool("moving", true);
         }
         else
         {
             animator.SetBool("moving", false);
         }
+
+        lastPos = this.transform.position;
     }
+
+    
 
     public void Say(string txt)
     {

@@ -25,7 +25,7 @@ public class Sheep : MonoBehaviour
 
         this.LoadSpriteSheet();
     }
-
+    public bool debug = false;
     // Runs after the animation has done its work
     private void LateUpdate()
     {
@@ -44,8 +44,11 @@ public class Sheep : MonoBehaviour
         spriteName = SpriteSheetName + '_' + parts[1];
 
 
-
-        //Debug.Log("VVV looking for --> " + spriteName);
+        if (debug)
+        {
+            Debug.Log("VVV looking for --> " + spriteName);
+        }
+        
 
         this.spriteRenderer.sprite = this.spriteSheet[spriteName];
     }
@@ -58,7 +61,7 @@ public class Sheep : MonoBehaviour
         var sprites = Resources.LoadAll<Sprite>(this.SpriteSheetName);
         foreach (var sprite in sprites)
         {
-            //Debug.Log("VVV->" +  sprite.name);
+            Debug.Log("VVV->" +  sprite.name);
         }
         this.spriteSheet = sprites.ToDictionary(x => x.name, x => x);
 

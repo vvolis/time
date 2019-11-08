@@ -65,16 +65,26 @@ public class DM : MonoBehaviour
 
     public static void SendMessage(string txt)
     {
-        Instance.msgTime = System.DateTime.Now.AddSeconds(2);
-        Instance.textScreen.text = txt;
+        //Instance.msgTime = System.DateTime.Now.AddSeconds(2);
+        //Instance.textScreen.text = txt;
     }
 
     // Update is called once per frame
 
     bool sceneInitiated = false;
     Scene scene;
+    float timeLeft = 0f;
     void Update()
     {
+
+        timeLeft += Time.deltaTime;
+        if (timeLeft > 1f && sceneInitiated)
+        {
+            scene.Update();
+            timeLeft = 0f;
+        }
+
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -85,6 +95,8 @@ public class DM : MonoBehaviour
                 //bug.Log("Scene created");
 
                 scene._actors.Add(actors["player"]);
+                scene._actors.Add(actors["cals1"]);
+                scene._actors.Add(actors["cals2"]);
                 scene._actors.Add(actors["cals1"]);
                 //bug.Log("Scene actors added");
 
@@ -108,6 +120,25 @@ public class DM : MonoBehaviour
         return Instance.actors[name];
     }
 
+    public Dictionary<string, bool> worldState = new Dictionary<string, bool>();
+
+    public static void SetWorldState(string key, bool value)
+    {
+        Instance.worldState[key] = value;
+    }
+
+    public static bool GetWorldState(string key)
+    {
+        return Instance.worldState[key];
+    }
+
+    public static void PrintWorldState()
+    {
+        foreach (KeyValuePair<string, bool> pair in Instance.worldState)
+        {
+            Debug.Log(pair.Key + ":" + pair.Value);
+        }
+    }
 
 
 }

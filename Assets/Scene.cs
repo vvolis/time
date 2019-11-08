@@ -9,6 +9,8 @@ public class Scene {
     List<(Entity, string)> _dialogue;
     public List<Entity> _actors;
 
+    public List<Action> story;
+
     public Scene()
     {
         _dialogue = new List<(Entity, string)>();
@@ -18,23 +20,29 @@ public class Scene {
         _actors.Add(DM.FindActor("cals3"));
         _actors.Add(DM.FindActor("cals2"));
         _actors.Add(DM.FindActor("cals1"));
+
+
+        story = new List<Action>();
+        story.Add(new Action() { target = _actors[0], name = "say", sayText = "im code sheep", resultState="act1"});
+
+        story.Add(new Action() { target = _actors[1], name = "say", sayText = "Ok I check it", resultState = "act2", followTarget = _actors[0].transform });
+        story.Add(new Action() { target = _actors[1], name = "goto", resultState = "act2", followTarget = _actors[0].transform }) ;
+
+        story.Add(new Action() { target = _actors[2], name = "say", sayText = "Im lonely", resultState = "act5" });
+
+        story.Add(new Action() { target = _actors[1], name = "say", sayText = "OK i come", resultState = "act3" });
+        story.Add(new Action() { target = _actors[1], name = "goto", resultState = "act4", followTarget = _actors[2].transform });
+
+        story.Add(new Action() { target = _actors[2], name = "say", sayText = "U came to me bro", resultState = "act5" });
+
+ 
+
     }
 
     public void Start()
     {
         //satur dialogu (kontrole laiku, atbilzu izveles un rezultatu)
         //satur events, kas liek dzekiem kko darit (piem izsauc Say)
-
-        _dialogue.Add((_actors[0], "cow"));
-        _dialogue.Add((_actors[1], "chickens"));
-        _dialogue.Add((_actors[2], "airplane"));
-        _dialogue.Add((_actors[3], "horses"));
-        _dialogue.Add((_actors[3], "horses1"));
-        _dialogue.Add((_actors[3], "horses2"));
-        _dialogue.Add((_actors[3], "horses3"));
-        _dialogue.Add((_actors[2], "smth"));
-        _dialogue.Add((_actors[1], "nth"));
-        _dialogue.Add((_actors[0], "around"));
 
     }
 
@@ -44,16 +52,30 @@ public class Scene {
     public void Update()
     {
 
-        if (i == _dialogue.Count)
-        {
-            i = 0;
-        }
-        _dialogue[i].Item1.Say(_dialogue[i].Item2);
-        i++;
+        bool flag = story[storyPoint % story.Count].DoAction();
+        if (flag)
 
- 
-
-
-
+        storyPoint++;
+        //DM.PrintWorldState();
     }
+
+
+    int storyPoint = 0;
+    public void Smth()
+    {
+       
+    }
+
+    //Am I carrying wood, and at a stockpile? Yes: drop it off
+    //Am I carrying wood? Yes: go to a stockpile
+    //Am I at a tree? Yes: chop it
+    //No to all above: go to a tree
+
+
+
+
+
+
+
+
 }

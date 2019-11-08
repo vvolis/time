@@ -10,6 +10,9 @@ public class Entity : MonoBehaviour
     protected SpeechBubble speechBubble;
     public string entityName = "tmpName";
 
+    public Transform followTarget;
+    public bool followEnabled;
+
     //All Entities have
     //--speech bubble
     //--Movement animation
@@ -48,5 +51,28 @@ public class Entity : MonoBehaviour
     public void Say(string txt)
     {
         speechBubble.SendMessage(txt);
+    }
+
+
+    public bool DoAction(Action action)
+    {
+        if (action.name == "say")
+        {
+            Say(action.sayText);
+            DM.SetWorldState(action.resultState, true);
+
+        } else if (action.name == "goto")
+        {
+
+            //walk to point
+            //if inside the radius finish action
+            followTarget = action.followTarget;
+            followEnabled = true;
+            Debug.Log("VV goto set on boi");
+
+        }
+
+        //if finished
+        return true;
     }
 }

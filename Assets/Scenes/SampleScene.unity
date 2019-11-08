@@ -1921,7 +1921,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 3.2}
+  m_AnchoredPosition: {x: -0, y: -27.51}
   m_SizeDelta: {x: 67.277, y: 18.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1411190151
@@ -3439,7 +3439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2016920503
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3558,7 +3558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityName: cals3
   followTarget: {fileID: 1326154205}
-  followEnabled: 1
+  followEnabled: 0
   target: {fileID: 1326154200}
   speed: 3
   followDistance: 1

@@ -27,6 +27,8 @@ public class Sheep : MonoBehaviour
     }
     public bool debug = false;
     // Runs after the animation has done its work
+
+    private string lastSprite = "";
     private void LateUpdate()
     {
         // Check if the sprite sheet name has changed (possibly manually in the inspector)
@@ -46,7 +48,12 @@ public class Sheep : MonoBehaviour
 
         if (debug)
         {
-            Debug.Log("VVV looking for --> " + spriteName);
+            if (lastSprite != spriteName)
+            {
+                lastSprite = spriteName;
+                Debug.Log("VVV looking for --> " + spriteName);
+            }
+            
         }
         
 

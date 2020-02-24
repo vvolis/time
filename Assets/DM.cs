@@ -94,10 +94,10 @@ public class DM : MonoBehaviour
                 scene = new Scene();
                 //bug.Log("Scene created");
 
-                scene._actors.Add(actors["player"]);
-                scene._actors.Add(actors["cals1"]);
-                scene._actors.Add(actors["cals2"]);
-                scene._actors.Add(actors["cals1"]);
+               //scene._actors.Add(actors["player"]);
+                //scene._actors.Add(actors["cals1"]);
+                //scene._actors.Add(actors["cals2"]);
+                //scene._actors.Add(actors["cals1"]);
                 //bug.Log("Scene actors added");
 
                 scene.Start();

@@ -7,33 +7,34 @@ public class Scene {
     // Start is called before the first frame update
 
     List<(Entity, string)> _dialogue;
-    public List<Entity> _actors;
+    //public List<Entity> _actors;
+
+    public Dictionary<string, Entity> _actors;
 
     public List<Action> story;
 
     public Scene()
     {
         _dialogue = new List<(Entity, string)>();
-        _actors = new List<Entity>();
-
-        _actors.Add(DM.FindActor("player"));
-        _actors.Add(DM.FindActor("cals3"));
-        _actors.Add(DM.FindActor("cals2"));
-        _actors.Add(DM.FindActor("cals1"));
+        _actors = new Dictionary<string, Entity>();
+        _actors["player"] = DM.FindActor("player");
+        _actors["cals1"] = DM.FindActor("cals1");
+        _actors["cals2"] = DM.FindActor("cals2");
+        _actors["cals3"] = DM.FindActor("cals3");
 
 
         story = new List<Action>();
-        story.Add(new Action() { target = _actors[0], name = "say", sayText = "im code sheep", resultState="act1"});
+        story.Add(new Action() { target = _actors["player"], name = "say", sayText = "im code sheep", resultState="act1"});
 
-        story.Add(new Action() { target = _actors[1], name = "say", sayText = "Ok I check it", resultState = "act2", followTarget = _actors[0].transform });
-        story.Add(new Action() { target = _actors[1], name = "goto", resultState = "act2", followTarget = _actors[0].transform }) ;
+        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "Ok I check it", resultState = "act2", followTarget = _actors["player"].transform });
+        story.Add(new Action() { target = _actors["cals1"], name = "goto", resultState = "act3", followTarget = _actors["player"].transform }) ;
 
-        story.Add(new Action() { target = _actors[2], name = "say", sayText = "Im lonely", resultState = "act5" });
+        story.Add(new Action() { target = _actors["cals2"], name = "say", sayText = "Im lonely", resultState = "act4" });
 
-        story.Add(new Action() { target = _actors[1], name = "say", sayText = "OK i come", resultState = "act3" });
-        story.Add(new Action() { target = _actors[1], name = "goto", resultState = "act4", followTarget = _actors[2].transform });
+        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "OK i come", resultState = "act5" });
+        story.Add(new Action() { target = _actors["cals1"], name = "goto", resultState = "act6", followTarget = _actors["cals2"].transform });
 
-        story.Add(new Action() { target = _actors[2], name = "say", sayText = "U came to me bro", resultState = "act5" });
+        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "U came to me bro", resultState = "act7" });
 
  
 

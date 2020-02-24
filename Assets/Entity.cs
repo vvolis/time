@@ -40,7 +40,7 @@ public class Entity : MonoBehaviour
     {
         Vector3 speed = this.transform.position - lastPos;
 
-        if (speed.magnitude > 0)
+        if (speed.magnitude > 0.0001f)
         {
             animator.SetFloat("moveX", speed.x);
             animator.SetFloat("moveY", speed.y);
@@ -48,6 +48,8 @@ public class Entity : MonoBehaviour
         }
         else
         {
+            //animator.SetFloat("moveX", speed.x);
+            //animator.SetFloat("moveY", speed.y);
             animator.SetBool("moving", false);
         }
 

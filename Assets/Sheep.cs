@@ -34,43 +34,24 @@ public class Sheep : MonoBehaviour
     private int refreshCounter = 1;*/
     private void LateUpdate()
     {
+        // Swap out the sprite to be rendered by its name
+        // Important: The name of the sprite must be the same!
+        var spriteName = this.spriteRenderer.sprite.name;
 
+        string[] parts = spriteName.Split('_');
+        spriteName = SpriteSheetName + '_' + parts[1];
 
-
-       /* if (refreshCounter % refreshEveryFrames  == 0)
-        {*/
-
-
-            // Check if the sprite sheet name has changed (possibly manually in the inspector)
-            if (this.LoadedSpriteSheetName != this.SpriteSheetName)
+        if (debug)
+        {
+            if (lastSprite != spriteName)
             {
-                Debug.Log("VVVloading spritesheet");
-                // Load the new sprite sheet
-                //this.LoadSpriteSheet();
+                lastSprite = spriteName;
+                Debug.Log("VVV looking for --> " + spriteName);
             }
 
-            // Swap out the sprite to be rendered by its name
-            // Important: The name of the sprite must be the same!
-            var spriteName = this.spriteRenderer.sprite.name;
+        }
 
-            string[] parts = spriteName.Split('_');
-            spriteName = SpriteSheetName + '_' + parts[1];
-
-            if (debug)
-            {
-                if (lastSprite != spriteName)
-                {
-                    lastSprite = spriteName;
-                    Debug.Log("VVV looking for --> " + spriteName);
-                }
-
-            }
-
-            this.spriteRenderer.sprite = this.spriteSheet[spriteName];
-            
-        //}
-
-       // refreshCounter++;
+        this.spriteRenderer.sprite = this.spriteSheet[spriteName];
     }
 
     // Loads the sprites from a sprite sheet

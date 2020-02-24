@@ -6,10 +6,10 @@ using System.Linq;
 public class Sheep : MonoBehaviour
 {
     // The name of the sprite sheet to use
-    public string SpriteSheetName;
+    public string SpriteSheetName = "wat";
 
     // The name of the currently loaded sprite sheet
-    private string LoadedSpriteSheetName;
+    private string LoadedSpriteSheetName = "boi";
 
     // The dictionary containing all the sliced up sprites in the sprite sheet
     private Dictionary<string, Sprite> spriteSheet;
@@ -29,35 +29,48 @@ public class Sheep : MonoBehaviour
     // Runs after the animation has done its work
 
     private string lastSprite = "";
+
+   /* private int refreshEveryFrames = 2;
+    private int refreshCounter = 1;*/
     private void LateUpdate()
     {
-        // Check if the sprite sheet name has changed (possibly manually in the inspector)
-        if (this.LoadedSpriteSheetName != this.SpriteSheetName)
-        {
-            // Load the new sprite sheet
-            this.LoadSpriteSheet();
-        }
-
-        // Swap out the sprite to be rendered by its name
-        // Important: The name of the sprite must be the same!
-        var spriteName = this.spriteRenderer.sprite.name;
-
-        string[] parts = spriteName.Split('_');
-        spriteName = SpriteSheetName + '_' + parts[1];
 
 
-        if (debug)
-        {
-            if (lastSprite != spriteName)
+
+       /* if (refreshCounter % refreshEveryFrames  == 0)
+        {*/
+
+
+            // Check if the sprite sheet name has changed (possibly manually in the inspector)
+            if (this.LoadedSpriteSheetName != this.SpriteSheetName)
             {
-                lastSprite = spriteName;
-                Debug.Log("VVV looking for --> " + spriteName);
+                Debug.Log("VVVloading spritesheet");
+                // Load the new sprite sheet
+                //this.LoadSpriteSheet();
             }
-            
-        }
-        
 
-        this.spriteRenderer.sprite = this.spriteSheet[spriteName];
+            // Swap out the sprite to be rendered by its name
+            // Important: The name of the sprite must be the same!
+            var spriteName = this.spriteRenderer.sprite.name;
+
+            string[] parts = spriteName.Split('_');
+            spriteName = SpriteSheetName + '_' + parts[1];
+
+            if (debug)
+            {
+                if (lastSprite != spriteName)
+                {
+                    lastSprite = spriteName;
+                    Debug.Log("VVV looking for --> " + spriteName);
+                }
+
+            }
+
+            this.spriteRenderer.sprite = this.spriteSheet[spriteName];
+            
+        //}
+
+       // refreshCounter++;
     }
 
     // Loads the sprites from a sprite sheet
@@ -66,10 +79,10 @@ public class Sheep : MonoBehaviour
         // Load the sprites from a sprite sheet file (png). 
         // Note: The file specified must exist in a folder named Resources
         var sprites = Resources.LoadAll<Sprite>(this.SpriteSheetName);
-        foreach (var sprite in sprites)
+       /* foreach (var sprite in sprites)
         {
             Debug.Log("VVV->" +  sprite.name);
-        }
+        }*/
         this.spriteSheet = sprites.ToDictionary(x => x.name, x => x);
 
         // Remember the name of the sprite sheet in case it is changed later

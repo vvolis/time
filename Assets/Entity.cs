@@ -38,27 +38,39 @@ public class Entity : MonoBehaviour
     private Vector3 lastPos;
     public void Update()
     {
-        Vector3 speed = this.transform.position - lastPos;
-
-        if (speed.magnitude > 0.0001f)
-        {
-            animator.SetFloat("moveX", speed.x);
-            animator.SetFloat("moveY", speed.y);
-            animator.SetBool("moving", true);
-        }
-        else
-        {
-            //animator.SetFloat("moveX", speed.x);
-            //animator.SetFloat("moveY", speed.y);
-            animator.SetBool("moving", false);
-        }
-
-        lastPos = this.transform.position;
+        
     }
 
-    
+    private int refreshEveryFrames = 2;
+    private int refreshCounter = 1;
+    private void LateUpdate()
+    {
+        if (refreshCounter % refreshEveryFrames == 0)
+        {
+            Vector3 speed = this.transform.position - lastPos;
 
-    public void Say(string txt)
+            if (speed.magnitude > 0.0001f)
+            {
+                animator.SetFloat("moveX", speed.x);
+                animator.SetFloat("moveY", speed.y);
+                animator.SetBool("moving", true);
+            }
+            else
+            {
+                //animator.SetFloat("moveX", speed.x);
+                //animator.SetFloat("moveY", speed.y);
+                animator.SetBool("moving", false);
+            }
+
+            lastPos = this.transform.position;
+        }
+        refreshCounter++;
+    }
+
+
+
+
+            public void Say(string txt)
     {
         speechBubble.SendMessage(txt);
     }
@@ -78,7 +90,7 @@ public class Entity : MonoBehaviour
             //if inside the radius finish action
             followTarget = action.followTarget;
             followEnabled = true;
-            Debug.Log("VV goto set on boi");
+           // Debug.Log("VV goto set on boi");
 
         }
 

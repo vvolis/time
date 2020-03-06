@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+
+
 public class Follower : Entity
 {
     public GameObject target;
@@ -20,35 +22,35 @@ public class Follower : Entity
             DM.RegisterPlayer(entityName, this);
         }
 
-        
     }
+
+
+    private int nextUpdate = 1;
 
     // Update is called once per frame
     new void Update()
     {
         if (followEnabled)
         {
-            Vector3 movement = followTarget.transform.position - transform.position;
-            /*if (movement.magnitude > followDistance)
-            {
-                //Say("Follow " + target.gameObject.name);
-                movement.Normalize();
-                rb2D.velocity = movement * speed;
-            }
-            else
-            {
-                //Say("Idle");
-                rb2D.velocity = movement * 0;
-            }*/
 
             Seeker seeker = GetComponent<Seeker>();
 
             // Start to calculate a new path to the targetPosition object, return the result to the OnPathComplete method.
             // Path requests are asynchronous, so when the OnPathComplete method is called depends on how long it
             // takes to calculate the path. Usually it is called the next frame.
-            seeker.StartPath(transform.position, followTarget.transform.position, OnPathComplete);
+            if (Time.time >= nextUpdate){
+                // Change the next update (current second+1)
+                nextUpdate = Mathf.FloorToInt(Time.time) + 1;
+                // Call your fonction
 
 
+
+
+
+                //quite likely we need to call this only once!!!!
+                seeker.StartPath(transform.position, followTarget.transform.position, OnPathComplete);
+            }
+          
             base.Update();
         }
        

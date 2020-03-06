@@ -65,33 +65,59 @@ public class Entity : MonoBehaviour
             lastPos = this.transform.position;
         }
         refreshCounter++;
+
+
+        if (currentAction != null && currentAction.name == "goto")
+        {
+            if ((followTarget.position - this.transform.position).magnitude < 0.1f)
+            {
+                ActionComplete();
+                followEnabled = false;
+            } 
+        }
+    }
+
+    Action currentAction = null;
+
+
+    public void ActionComplete()
+    {
+        foreach (string state in currentAction.resultState)
+        {
+            DM.SetWorldState(state, true);
+        }
+
+        Debug.Log("Completed action:" + currentAction.name);
+
+
+        currentAction.scene.AdvanceStory();
+        currentAction = null;
     }
 
 
 
-
-            public void Say(string txt)
+    public void Say(string txt)
     {
         speechBubble.SendMessage(txt);
     }
 
-
+    
     public bool DoAction(Action action)
     {
+        currentAction = action;
         if (action.name == "say")
         {
             Say(action.sayText);
-            DM.SetWorldState(action.resultState, true);
+            
+            ActionComplete();
+
 
         } else if (action.name == "goto")
         {
-
             //walk to point
             //if inside the radius finish action
             followTarget = action.followTarget;
             followEnabled = true;
-           // Debug.Log("VV goto set on boi");
-
         }
 
         //if finished

@@ -24,18 +24,22 @@ public class Scene {
 
 
         story = new List<Action>();
-        story.Add(new Action() { target = _actors["player"], name = "say", sayText = "im code sheep", resultState="act1"});
+        story.Add(new Action() { target = _actors["player"], name = "say", sayText = "im code sheep", conditions = { "act0" }, resultState = { "act1" } });
 
-        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "Ok I check it", resultState = "act2", followTarget = _actors["player"].transform });
-        story.Add(new Action() { target = _actors["cals1"], name = "goto", resultState = "act3", followTarget = _actors["player"].transform }) ;
+        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "Ok I check it", conditions = { "act1" }, resultState = { "act2" }});
+        story.Add(new Action() { target = _actors["cals1"], name = "goto", conditions = {"act2"}, resultState = { "act3" }, followTarget = _actors["player"].transform }) ;
 
-        story.Add(new Action() { target = _actors["cals2"], name = "say", sayText = "Im lonely", resultState = "act4" });
+        story.Add(new Action() { target = _actors["cals2"], name = "say", sayText = "Im lonely", conditions = { "act3" }, resultState = { "act4" } });
 
-        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "OK i come", resultState = "act5" });
-        story.Add(new Action() { target = _actors["cals1"], name = "goto", resultState = "act6", followTarget = _actors["cals2"].transform });
+        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "OK i come", conditions = { "act4" }, resultState = { "act5" } });
+        story.Add(new Action() { target = _actors["cals1"], name = "goto", conditions = { "act5" }, resultState = { "act6" }, followTarget = _actors["cals2"].transform });
 
-        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "U came to me bro", resultState = "act7" });
+        story.Add(new Action() { target = _actors["cals1"], name = "say", sayText = "U came to me bro", conditions = { "act6" }, resultState = { "act0" } });
 
+        foreach (Action act in story)
+        {
+            act.scene = this;
+        }
  
 
     }
@@ -49,14 +53,24 @@ public class Scene {
 
     // Update is called once per frame
 
+    public void AdvanceStory()
+    {
+        Debug.Log("Story advanced");
+        storyPoint++;
+    }
+
+    public int lastActionIdx = -1;
+
     int i = 0;
     public void Update()
     {
+        if (lastActionIdx != storyPoint)
+        {
+            lastActionIdx = storyPoint;
+            story[storyPoint % story.Count].DoAction();
+            
+        }
 
-        bool flag = story[storyPoint % story.Count].DoAction();
-        if (flag)
-
-        storyPoint++;
         //DM.PrintWorldState();
     }
 

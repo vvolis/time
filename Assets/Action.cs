@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Action : MonoBehaviour
-{ 
+{
 
     //walk
     //say
@@ -15,10 +15,13 @@ public class Action : MonoBehaviour
     public string sayText;
     public Entity target;
     public Transform followTarget;
+    public Scene scene;
 
     //result map
+    public List<string> conditions = new List<string>() { "" };
+    public List<string> resultState = new List<string>() { "" };
 
-    public string resultState = "";
+
 
     public bool DoAction()
     {
